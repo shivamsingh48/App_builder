@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ColorfulTodo</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="app.js"></script>
+</head>
+<body>
+    <!-- Application Logo -->
+    <img src="assets/icon.svg" alt="ColorfulTodo logo" class="app-logo" aria-hidden="true" />
+
+    <!-- Header with title and dark‑mode toggle -->
+    <header role="banner" class="app-header">
+        <h1 class="app-title">ColorfulTodo</h1>
+        <button id="dark-mode-toggle" aria-label="Toggle dark mode" aria-pressed="false">
+            🌙
+        </button>
+    </header>
+
+    <!-- Main content area -->
+    <main role="main" class="app-main">
+        <section class="todo-input-section">
+            <input
+                id="new-todo-input"
+                class="new-todo"
+                type="text"
+                placeholder="What needs to be done?"
+                aria-label="New todo"
+                autocomplete="off"
+            />
+        </section>
+        <section class="todo-list-section">
+            <ul id="todo-list" class="todo-list" aria-live="polite"></ul>
+        </section>
+    </main>
+
+    <!-- Footer with filters and clear completed -->
+    <footer role="contentinfo" class="app-footer">
+        <nav role="navigation" aria-label="Todo filters" class="todo-filters">
+            <button class="filter-btn" data-filter="all" aria-pressed="true">All</button>
+            <button class="filter-btn" data-filter="active" aria-pressed="false">Active</button>
+            <button class="filter-btn" data-filter="completed" aria-pressed="false">Completed</button>
+        </nav>
+        <button id="clear-completed" class="clear-completed" aria-label="Clear completed tasks">
+            Clear completed
+        </button>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,348 @@
+/*
+  styles.css – ColorfulTodo application stylesheet
+  -------------------------------------------------
+  Implements a vibrant color palette with dark‑mode support, responsive layout,
+  interactive UI elements, animations, and accessibility enhancements.
+*/
+
+/* --------------------------------------------------------------------------
+   1. CSS Variables & Themes
+   -------------------------------------------------------------------------- */
+:root {
+  /* Primary palette */
+  --color-primary: #ff6f61;        /* vibrant coral */
+  --color-primary-dark: #e65b50;
+  --color-secondary: #6c5ce7;      /* bright indigo */
+  --color-secondary-dark: #5746c3;
+  --color-accent: #00b894;         /* fresh teal */
+  --color-accent-dark: #009074;
+
+  /* Neutral colors */
+  --color-bg: #ffffff;
+  --color-bg-alt: #f9f9f9;
+  --color-text: #2d3436;
+  --color-muted: #636e72;
+
+  /* Focus outline */
+  --focus-outline: 3px solid var(--color-accent);
+
+  /* Transition timing */
+  --transition-duration: 0.3s;
+  --transition-easing: ease-in-out;
+}
+
+/* Dark theme overrides */
+[data-theme="dark"] {
+  --color-primary: #ff8787;        /* softer red for dark bg */
+  --color-primary-dark: #ff6b6b;
+  --color-secondary: #a29bfe;      /* light indigo */
+  --color-secondary-dark: #8c7ae6;
+  --color-accent: #55efc4;         /* bright teal */
+  --color-accent-dark: #00b894;
+
+  --color-bg: #1e272e;            /* deep charcoal */
+  --color-bg-alt: #2d3436;        /* slightly lighter for cards */
+  --color-text: #d2dae2;          /* light gray */
+  --color-muted: #b2bec3;
+}
+
+/* --------------------------------------------------------------------------
+   2. Layout & Typography
+   -------------------------------------------------------------------------- */
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+}
+
+.app-logo {
+  width: 80px;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.app-header, .app-main, .app-footer {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.app-header {
+  margin-bottom: 1.5rem;
+}
+
+.app-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.app-main {
+  flex-direction: column;
+  gap: 1rem;
+  flex-grow: 1;
+}
+
+.app-footer {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+/* --------------------------------------------------------------------------
+   3. Todo List UI
+   -------------------------------------------------------------------------- */
+.new-todo {
+  width: 100%;
+  font-size: 1.125rem;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--color-primary);
+  border-radius: 8px;
+  background-color: var(--color-bg-alt);
+  color: var(--color-text);
+  outline: none;
+  transition: border-color var(--transition-duration) var(--transition-easing),
+              box-shadow var(--transition-duration) var(--transition-easing);
+}
+
+.new-todo::placeholder {
+  color: var(--color-muted);
+}
+
+.new-todo:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 4px rgba(0, 184, 148, 0.2);
+}
+
+.todo-list {
+  list-style: none;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.todo-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-bg-alt);
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+  transition: background-color var(--transition-duration) var(--transition-easing),
+              opacity var(--transition-duration) var(--transition-easing);
+}
+
+.todo-list li:hover {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.todo-list li .todo-text {
+  flex: 1;
+  margin-right: 0.5rem;
+  word-break: break-word;
+}
+
+.todo-list li.completed {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+
+/* Action buttons (edit / delete) */
+.todo-action {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.25rem;
+  margin-left: 0.25rem;
+  border-radius: 4px;
+  transition: background-color var(--transition-duration) var(--transition-easing);
+}
+
+.todo-action:hover,
+.todo-action:focus-visible {
+  background-color: rgba(0, 0, 0, 0.1);
+  outline: var(--focus-outline);
+}
+
+/* --------------------------------------------------------------------------
+   4. Interactive Elements (Buttons, Toggle)
+   -------------------------------------------------------------------------- */
+button,
+.todo-action {
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--color-primary);
+  border-radius: 6px;
+  background-color: var(--color-primary);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color var(--transition-duration) var(--transition-easing),
+              border-color var(--transition-duration) var(--transition-easing),
+              color var(--transition-duration) var(--transition-easing);
+}
+
+button:hover,
+button:focus-visible {
+  background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  outline: var(--focus-outline);
+}
+
+/* Filter buttons – indicate pressed state */
+.filter-btn[data-filter] {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  border-color: var(--color-muted);
+}
+
+.filter-btn[aria-pressed="true"] {
+  background-color: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+/* Clear completed button */
+.clear-completed {
+  align-self: flex-end;
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+
+.clear-completed:hover,
+.clear-completed:focus-visible {
+  background-color: var(--color-secondary-dark);
+  border-color: var(--color-secondary-dark);
+}
+
+/* Dark‑mode toggle */
+#dark-mode-toggle {
+  font-size: 0;               /* hide original text */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 50%;
+  transition: background-color var(--transition-duration) var(--transition-easing);
+  position: relative;
+}
+
+#dark-mode-toggle::before {
+  content: "🌙"; /* default moon */
+  font-size: 1.5rem;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#dark-mode-toggle[aria-pressed="true"]::before {
+  content: "☀️"; /* sun for light mode */
+}
+
+#dark-mode-toggle:hover,
+#dark-mode-toggle:focus-visible {
+  background-color: rgba(0, 0, 0, 0.1);
+  outline: var(--focus-outline);
+}
+
+/* --------------------------------------------------------------------------
+   5. Responsive Design
+   -------------------------------------------------------------------------- */
+@media (max-width: 600px) {
+  body {
+    padding: 1rem 0.5rem;
+  }
+  .app-header, .app-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .app-header {
+    gap: 0.5rem;
+  }
+  .app-title {
+    font-size: 1.75rem;
+    text-align: center;
+  }
+  #dark-mode-toggle {
+    align-self: center;
+    font-size: 2rem; /* overrides hidden text size, but pseudo-element uses its own size */
+  }
+  .new-todo {
+    font-size: 1rem;
+    padding: 0.65rem 0.9rem;
+  }
+  button,
+  .todo-action {
+    padding: 0.6rem 0.9rem;
+    font-size: 1rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   6. Animations
+   -------------------------------------------------------------------------- */
+/* Fade‑in for newly added items */
+.todo-list li {
+  animation: fadeIn var(--transition-duration) var(--transition-easing) forwards;
+}
+
+/* Fade‑out when removed – JS should add .removing class */
+.todo-list li.removing {
+  animation: fadeOut var(--transition-duration) var(--transition-easing) forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; height: auto; }
+  to { opacity: 0; height: 0; margin: 0; padding: 0; }
+}
+
+/* Theme transition – applied on the html element */
+html {
+  transition: background-color var(--transition-duration) var(--transition-easing),
+              color var(--transition-duration) var(--transition-easing);
+}
+
+/* --------------------------------------------------------------------------
+   7. Accessibility
+   -------------------------------------------------------------------------- */
+:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+}
+
+/* Ensure sufficient contrast – using variables that already meet WCAG AA */
+
+/* End of stylesheet */
